@@ -1,0 +1,44 @@
+export KUBEVIRT_VERSION=$(curl -s https://api.github.com/repos/kubevirt/kubevirt/releases/latest | jq -r .tag_name)
+echo $KUBEVIRT_VERSION
+
+kubectl create -f https://github.com/kubevirt/kubevirt/releases/download/${KUBEVIRT_VERSION}/kubevirt-operator.yaml (create kubevirt operator - (runtime for kubevirt))
+
+kubectl create -f https://github.com/kubevirt/kubevirt/releases/download/${KUBEVIRT_VERSION}/kubevirt-cr.yaml   (create kubevirt api to triger kubevirt operator)
+
+wget -O virtctl https://github.com/kubevirt/kubevirt/releases/download/${KUBEVIRT_VERSION}/virtctl-${KUBEVIRT_VERSION}-linux-amd64
+
+to install virtctl
+
+chmod +x virtctl
+
+kubectl get vms
+
+./virtctl start vmname
+
+once started check using 
+
+kubectl get vmis or vmi
+
+./virtctl stop testvm
+
+kubectl delete vms testvm
+
+##################3
+
+CDI:Container Data Importer
+
+This is to import VM images to the Kubevirt. With this image a PVC is created . A custom controller watches for importer specific claims, and when discovered, starts an import process to create a raw image named disk.img with the desired content into the associated PVC.
+
+wget https://raw.githubusercontent.com/kubevirt/hostpath-provisioner/main/deploy/kubevirt-hostpath-provisioner.yaml
+kubectl create -f kubevirt-hostpath-provisioner.yaml
+kubectl annotate storageclass kubevirt-hostpath-provisioner storageclass.kubernetes.io/is-default-class=true
+
+kubectl get storageclass
+
+export VERSION=$(curl -s https://github.com/kubevirt/containerized-data-importer/releases/latest | grep -o "v[0-9]\.[0-9]*\.[0-9]*")
+
+kubectl create -f https://github.com/kubevirt/containerized-data-importer/releases/download/$VERSION/cdi-operator.yaml
+
+
+kubectl create -f https://github.com/kubevirt/containerized-data-importer/releases/download/$VERSION/cdi-cr.yaml
+
