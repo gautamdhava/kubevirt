@@ -42,3 +42,5 @@ kubectl create -f https://github.com/kubevirt/containerized-data-importer/releas
 
 kubectl create -f https://github.com/kubevirt/containerized-data-importer/releases/download/$VERSION/cdi-cr.yaml
 
+curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+
