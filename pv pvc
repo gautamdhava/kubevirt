@@ -1,3 +1,5 @@
+https://www.linuxtechi.com/configure-nfs-persistent-volume-kubernetes/
+
 apiVersion: v1
 kind: PersistentVolume
 metadata:
