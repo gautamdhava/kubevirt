@@ -1,0 +1,53 @@
+[root@kube-master git]# cat vm.yaml 
+apiVersion: kubevirt.io/v1alpha3
+kind: VirtualMachine
+metadata:
+  name: win2k12-iso
+spec:
+  running: false
+  template:
+    metadata:
+      labels:
+        kubevirt.io/domain: win2k12-iso
+    spec:
+      domain:
+        cpu:
+          cores: 6
+        devices:
+          disks:
+          - bootOrder: 1
+            cdrom:
+              bus: sata
+            name: cdromiso
+          - disk:
+              bus: virtio
+            name: harddrive
+            bootOrder: 2
+          - cdrom:
+              bus: sata
+              readonly: true
+            name: virtiocontainerdisk
+          interfaces:
+          - masquerade: {}
+            model: e1000
+            name: default
+
+        firmware:
+          uuid: 5d307ca9-b3ef-428c-8861-06e72d69f223
+        machine:
+          type: q35
+        resources:
+          requests:
+            memory: 40G
+      networks:
+         - name: default
+           pod: {}
+      volumes:
+      - name: cdromiso
+        persistentVolumeClaim:
+          claimName: iso-win2k12
+      - name: harddrive
+        persistentVolumeClaim:
+          claimName: winhd
+      - containerDisk:
+          image: kubevirt/virtio-container-disk
