@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kubevirt-config
+  namespace: kubevirt
+  labels:
+    kubevirt.io: ""
+data:
+  feature-gates: "LiveMigration"
+
+
+A current kubevirt-config can be edited to append “LiveMigration” to an existing configuration:
+
+Copy
+kubectl edit configmap kubevirt-config -n kubevirt
+Copy
+data:
+  feature-gates: "DataVolumes,LiveMigration"
