@@ -1,3 +1,29 @@
+working:
+
+[root@kube-master git]# cat pvc.yaml 
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: winhd
+spec:
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 15Gi
+  storageClassName: local
+[root@kube-master git]# cat virtctlpre.txt 
+ ./virtctl image-upload --image-path=/root/windowsdvd.iso --pvc-name=iso-win2k12 --pvc-size=6G --access-mode=ReadOnlyMany  --insecure --storage-class=local --uploadproxy-url=https://10.107.175.233/v1alpha1/upload
+[root@kube-master git]# 
+
+
+3333333333333333333333333333333333333333333333333
+
+
+
+
+
 https://www.linuxtechi.com/configure-nfs-persistent-volume-kubernetes/
 
 apiVersion: v1
