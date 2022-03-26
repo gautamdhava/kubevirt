@@ -1,0 +1,17 @@
+apiVersion: cdi.kubevirt.io/v1beta1
+kind: DataVolume
+metadata:
+  name: <cloner-datavolume> 
+spec:
+  source:
+    pvc:
+      namespace: "<source-namespace>" 
+      name: "<my-favorite-vm-disk>" 
+  pvc:
+    accessModes:
+      - ReadWriteOnce
+    resources:
+      requests:
+        storage: <2Gi> 
+        
+        https://docs.okd.io/4.9/virt/virtual_machines/cloning_vms/virt-cloning-vm-disk-into-new-datavolume.html
